@@ -51,7 +51,6 @@ int main()
 	// SPRITE
 	Sprite beeSprite;
 	beeSprite.setTexture(bee);
-	beeSprite.setPosition(0,800);
 
 	// Boolean for flying bee
 	bool beeFlying = false;
@@ -110,13 +109,71 @@ int main()
 
 		Time t = clock.restart();
 
+		//********************BEE******************************
 		// BEE FLYING
 		if(!beeFlying)
 		{
-			srand((int)Time(0) *10);
+			// Speed
+			srand((int)time(0) *10);
 			// Speed between 200 to 399
 			beeSpeed = (rand() % 200) +200;
+
+			// Height
+			srand((int) time(0) * 10);
+			// Height between 500 to 999
+			float height = (rand() %500) + 500;
+			beeSprite.setPosition(2000, height);
+
+			beeFlying = true;
+
 		}
+
+		else
+		{
+			beeSprite.setPosition(beeSprite.getPosition().x -
+								 (beeSpeed * t.asSeconds()),
+								  beeSprite.getPosition().y);
+
+			if(beeSprite.getPosition().x < -100)
+			{
+				beeFlying = false;
+			}
+		}
+
+		//****************************************************
+
+
+		//*********************CLOUD1*************************
+
+		if(!cloud1Moving)
+				{
+					// Speed
+					srand((int)time(0) *10);
+					// Speed between 0 to 199
+					cloud1Speed = (rand() % 200);
+
+					// Height
+					srand((int) time(0) * 10);
+					// Height between 0 to 149
+					float cloudHeight = (rand() % 150);
+					cloud1.setPosition(-200, cloudHeight);
+
+					cloud1Moving = true;
+
+				}
+		else
+		{
+			cloud1.setPosition(cloud1.getPosition().x +
+								 (cloud1Speed * t.asSeconds()),
+								 cloud1.getPosition().y);
+
+			if(cloud1.getPosition().x > 1920)
+			{
+				cloud1Moving = false;
+			}
+		}
+
+
 
 		window.draw(bgSprite);
 		window.draw(cloud1);
