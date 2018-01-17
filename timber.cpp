@@ -100,80 +100,172 @@ int main()
 
 	Clock clock;
 
+	//**********************************************************
+
+	//***********************Game Paused************************
+
+	bool paused = true;
+
+	//**********************************************************
+
+	//******************while window is open********************
+
 	while(window.isOpen())
 	{
+		//*****************Escape Key**************************
 		if(Keyboard :: isKeyPressed(Keyboard::Escape))
 		{
 			window.close();
 		}
 
-		Time t = clock.restart();
+		//*****************************************************
 
-		//********************BEE******************************
-		// BEE FLYING
-		if(!beeFlying)
+
+		//**************Enter Key******************************
+
+		if(Keyboard :: isKeyPressed(Keyboard :: Return))
 		{
-			// Speed
-			srand((int)time(0) *10);
-			// Speed between 200 to 399
-			beeSpeed = (rand() % 200) +200;
-
-			// Height
-			srand((int) time(0) * 10);
-			// Height between 500 to 999
-			float height = (rand() %500) + 500;
-			beeSprite.setPosition(2000, height);
-
-			beeFlying = true;
-
+			paused = false;
 		}
 
-		else
+		if(!paused)
 		{
-			beeSprite.setPosition(beeSprite.getPosition().x -
-								 (beeSpeed * t.asSeconds()),
-								  beeSprite.getPosition().y);
+			Time t = clock.restart();
 
-			if(beeSprite.getPosition().x < -100)
+			//********************BEE******************************
+			// BEE FLYING
+			if(!beeFlying)
 			{
-				beeFlying = false;
+				// Speed
+				srand((int)time(0) *10);
+				// Speed between 200 to 399
+				beeSpeed = (rand() % 200) +200;
+
+				// Height
+				srand((int) time(0) * 10);
+				// Height between 500 to 999
+				float height = (rand() %500) + 500;
+				beeSprite.setPosition(2000, height);
+
+				beeFlying = true;
+
 			}
-		}
 
-		//****************************************************
+			else
+			{
+				beeSprite.setPosition(beeSprite.getPosition().x -
+									 (beeSpeed * t.asSeconds()),
+									  beeSprite.getPosition().y);
 
-
-		//*********************CLOUD1*************************
-
-		if(!cloud1Moving)
+				if(beeSprite.getPosition().x < -100)
 				{
-					// Speed
-					srand((int)time(0) *10);
-					// Speed between 0 to 199
-					cloud1Speed = (rand() % 200);
-
-					// Height
-					srand((int) time(0) * 10);
-					// Height between 0 to 149
-					float cloudHeight = (rand() % 150);
-					cloud1.setPosition(-200, cloudHeight);
-
-					cloud1Moving = true;
-
+					beeFlying = false;
 				}
-		else
-		{
-			cloud1.setPosition(cloud1.getPosition().x +
-								 (cloud1Speed * t.asSeconds()),
-								 cloud1.getPosition().y);
-
-			if(cloud1.getPosition().x > 1920)
-			{
-				cloud1Moving = false;
 			}
+
+			//****************************************************
+
+
+			//*********************CLOUD1*************************
+
+			if(!cloud1Moving)
+					{
+						// Speed
+						srand((int)time(0) *10);
+						// Speed between 0 to 199
+						cloud1Speed = (rand() % 150);
+
+						// Height
+						srand((int) time(0) * 10);
+						// Height between 0 to 149
+						float cloudHeight = (rand() % 150);
+						cloud1.setPosition(-200, cloudHeight);
+
+						cloud1Moving = true;
+
+					}
+			else
+			{
+				cloud1.setPosition(cloud1.getPosition().x +
+									 (cloud1Speed * t.asSeconds()),
+									 cloud1.getPosition().y);
+
+				if(cloud1.getPosition().x > 2000)
+				{
+					cloud1Moving = false;
+				}
+			}
+
+			//****************************************************
+
+			//*********************Cloud2*************************
+
+			if(!cloud2Moving)
+					{
+						// Speed
+						srand((int)time(0) * 10);
+						// Speed between 0 to 149
+						cloud2Speed = (rand() % 100);
+
+						// Height
+						srand((int) time(0) * 10);
+						// Height between 0 to 149
+						float cloudHeight = (rand() % 150) - 100;
+						cloud2.setPosition(-700, cloudHeight);
+
+						cloud2Moving = true;
+
+					}
+			else
+			{
+				cloud2.setPosition(cloud2.getPosition().x +
+									 (cloud2Speed * t.asSeconds()),
+									 cloud2.getPosition().y);
+
+				if(cloud2.getPosition().x > 2000)
+				{
+					cloud2Moving = false;
+				}
+			}
+
+			//****************************************************
+
+
+			//*********************Cloud3*************************
+
+			if(!cloud3Moving)
+					{
+						// Speed
+						srand((int)time(0) * 10);
+						// Speed between 0 to 209
+						cloud3Speed = (rand() % 100);
+
+						// Height
+						srand((int) time(0) * 20);
+						// Height between 0 to 149
+						float cloudHeight = (rand() % 350) -150;
+						cloud3.setPosition(-1100, cloudHeight);
+
+						cloud3Moving = true;
+
+					}
+			else
+			{
+				cloud3.setPosition(cloud3.getPosition().x +
+									 (cloud3Speed * t.asSeconds()),
+									 cloud3.getPosition().y);
+
+				if(cloud3.getPosition().x > 2000)
+				{
+					cloud3Moving = false;
+				}
+			}
+
+			//********************************************************
+
 		}
 
-
+		//**********************End (!paused)************************
 
 		window.draw(bgSprite);
 		window.draw(cloud1);
@@ -183,7 +275,10 @@ int main()
 		window.draw(beeSprite);
 
 		window.display();
+
 	}
+
+	//************************************************************
 
 	return 0;
 
